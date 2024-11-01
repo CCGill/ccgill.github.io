@@ -1,0 +1,13 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/005-docker-container-for-bioinformatics/docker-containers-for-bioinformatics.html",
+      "/posts/002--postgresql-in-docker/2024-10-31--working-with-a-local-postgresql-database.html",
+      "/posts/004--R-resources/R-resource.html",
+      "/posts/003--planned-future-posts/upcoming-posts.html",
+      "/posts/001--renv-project-structure/2024-10-29--my-first-post.html",
+      "/posts/welcome/index.html"
+    ]
+  }
+]
