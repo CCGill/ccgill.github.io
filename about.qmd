@@ -1,0 +1,16 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/christopher-c-gill
+    - icon: github
+      text: Github
+      href: https://github.com/CCGill
+
+---
+
+This site is still in-development, and will replace my previous personal site.  Over time I will migrate my old site to this one, expanding my personal pages and blog posts.

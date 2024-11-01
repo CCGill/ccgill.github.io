@@ -1,0 +1,12 @@
+---
+title: "Welcome To My Blog"
+author: "CG"
+date: "2024-10-26"
+categories: [news]
+---
+
+This is the first post in a Quarto blog. Welcome!
+
+![](thumbnail.jpg)
+
+This is the first time I have returned to blogging in some years, and I look forward to it.  I hope to repost some of my old work as well as create new material.  The posts are at times notes for myself, with tools I've developed or used, as well as opinions, pedagogical posts, tips, tricks, and references. I have learnt a great deal from reading other blogs, so I hope the posts generated in this blog are of similar help to others. 

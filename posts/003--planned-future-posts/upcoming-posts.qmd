@@ -1,0 +1,48 @@
+---
+title: Planned/upcoming posts
+author: "CG"
+date: "2024-10-31"
+date-modified: "2024-10-31"
+categories: [news]
+---
+
+I plan to write on a number of topics, more or less documenting useful tools and methods I've come across or developed. Some posts planned for a later date are as follows:
+
+- Collected resources and strategies for 
+    - **learning and becoming effective in R**
+    - **learning and becoming effective in Python**
+    - **population** genetics resources
+- **DataFrames**: base R, tibbles, data.table, Pandas and Polars - my perspective coming from R to the python ecosystem.
+- Reflections on software engineering for research data science vs. production code: lessons learned.
+- Building R packages - an introduction
+- Optimizing R code with C++ and Rcpp, RcppEigen, and RcppArmadillo by example.
+- Incorporating python code into an R package.
+- Rcpp Modules, exporting C++ classes to R.
+- A repository structure for **developing alembic migrations** (docker + postgresql + python)
+- Using **python cookiecutter** to setup containerized python scripts
+- Working with **parquet files in R and python**
+- Exploring the effect of normalization choices on **PCA in population genetics**
+- Getting started with **nextflow for workflow orchestration**
+- plotting and figure arrangement: **R with ggplot2**, and migrating this to **python with plotnine**
+- plotting in python with **Polars and Altair**
+- data validation with **Pydantic**
+- handling dates and datetimes in R and python
+- **Handling the command line: shell commands - a useful toolbox**
+    - grep, rg, sed, awk, jq, 
+    - reproducibility with docker and biocontainers 
+    - AWS: awscli, aws-vault
+- data wrangling and exploration with
+    - polars in Python
+    - pandas in Python
+    - dplyr in R
+- using tidymodels with a bioinformatics application
+- using scikit-learn with a bioinformatics application
+- managing environments:
+    - conda/mamba
+    - rig + renv
+    - pyenv + venv/poetry
+- Running jupyter lab remotely to access over an ssh connection
+- permutations and group actions
+- binomial coefficients and p-adic expansions
+
+At some point I will post a little more on popular mathematics.
