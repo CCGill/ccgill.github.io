@@ -3,7 +3,7 @@ title: Resources for learning R
 author: "CG"
 date: "2024-10-31"
 date-modified: "2024-10-31"
-categories: [news]
+categories: [resources, R, data-science, software-development]
 ---
 
 R is described as  "a free software environment for statistical computing and graphics" at the [R project for Statistical Computing](https://www.r-project.org/).  For me the strength of R is not only as a programming language but also a powerful statistical computing system, it is powerful, relatively easy to use for statistical analysis and has excellent facilities to easily produce publication quality plots.
