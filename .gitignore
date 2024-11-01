@@ -1,2 +1,5 @@
 /.quarto/
 /_site/
+/_freeze/
+/docs/notes
+/notes/
