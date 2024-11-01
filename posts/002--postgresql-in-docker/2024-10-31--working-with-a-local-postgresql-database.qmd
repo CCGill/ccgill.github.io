@@ -1,0 +1,87 @@
+---
+title: Working with a local postgres database docker container
+description: "Setting up and connecting to a local postgresql docker container"
+author: "CG"
+date: "2024-10-31"
+date-modified: "2024-10-31"
+categories: [data-analysis, data-engineering, SQL, introductory, docker, containerization]
+engine: knitr
+# draft: true
+---
+
+::: {layout-ncol=2}
+![](docker-mark-blue.svg)
+
+![](elephant.png)
+:::
+
+
+In this post I'll describe some basic commands to work locally with a postgresql database in a docker container.  There are many advantages to this - you can run it as an ephemeral database, or build and keep a container image with your data in it.  Although the commands and details here are basic, I've found this to be a great resource for testing out queries or query patterns.
+
+# Running postgres locally
+
+A standard postgres image is available on dockerhub [here](https://hub.docker.com/_/postgres/).  The section "How to use this image" is particularly helpful.  I will briefly describe the setup I use for experimenting with query patterns and features in postgres:
+
+## Starting and stopping a postgres container database
+
+To start the container, I first pull the latest image as follows
+```{bash}
+#| eval: false
+docker pull postgres
+```
+
+Next, I use the following command, with suitable substitutes for the username "postgres" and password "mypassword" specified here.
+```{bash}
+#| output: false
+docker run --rm -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mypassword --name tmp-postgres postgres
+```
+Running the following command will show the container is running.
+```{bash}
+docker container ls
+```
+
+<!-- Running the command `docker container ls` will show the container is running as follows
+```default
+CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS                    NAMES
+408f02475917   postgres   "docker-entrypoint.s…"   8 seconds ago   Up 3 seconds   0.0.0.0:5432->5432/tcp   tmp-postgres
+``` -->
+
+You now have a local postgres database running on your machine.  It is useful to understand the various options specified in the above command.  This is an expansion of a simpler command `docker run postgres`, with some configuration options.
+
+- `-d`: runs the container detached from your shell;
+- `--rm`: This option ensures that data is not stored in the container when stopped;
+- `-p 5432:5432`: This is port forwarding port `5432` to `localhost`;
+- `-e POSTGRES_USER=postgres`: sets up a database user with username `postgres`;
+- `-e POSTGRES_PASSWORD=password` : sets the password for the above user to be `password`;
+- `--name tmp-postgres`: sets the container name while it is running.
+
+To stop the container, simply run the following command
+
+```{bash}
+#| eval: false
+
+docker stop tmp-postgres
+```
+
+## Connecting to the local database
+
+I will write separate posts concerning connecting to the database with R, Python elsewhere, but will start here with [visual studio code](#visual-studio-code).
+
+```{bash}
+#| echo: false
+#| output: false
+docker stop tmp-postgres
+```
+
+### Visual Studio Code
+
+I have found the [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools) extension to be sufficient, with the SQLTools PostgreSQL/Cockroach extension.  Once installed, open the extension from the icon, select create a new connection, choose the PostreSQL driver, and the following options:
+
+- Connect using: `Server and Port`
+- Server Address: `localhost`
+- Port: `5432`
+- Database: `postgres`
+- Username: `postgres` (the username specified earlier)
+- Password: `mypassword` (Select `save as plain text in settings`, or `ask on connect` and when required enter the password specified earlier)
+
+I may add further details and screenshots here at a later date.
