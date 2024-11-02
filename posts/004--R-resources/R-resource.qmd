@@ -21,9 +21,11 @@ Hadley Wickham and the posit team have produced some excellent resources, which 
 - [Advanced R](https://adv-r.hadley.nz/): An advanced book from Hadley Wickham - I thoroughly enjoyed it, the content is excellent and well written, but is for established R users.
 
 Roger Peng has produced a handy book re. software development in R.  This is excellent if you're serious about developing packages, but may not be for you if you are mostly interested in analysis.
+
 - [Mastering Software Development with R](https://bookdown.org/rdpeng/RProgDA/): a very useful book from Roger Peng and others.
 
 Rafael Irizarry has also written two introductory courses, which start from scratch but equip you to carry out many statistical analyses in R.
+
 - [Data Analysis for the Life Sciences](https://github.com/genomicsclass/labs?tab=readme-ov-file): a useful introductory book from Rafael Irizarry
 - [Introduction to Data Science: Data Analysis and Prediction Algorithms with R](https://rafalab.dfci.harvard.edu/dsbook/): another book from Rafael Irizarry
 
