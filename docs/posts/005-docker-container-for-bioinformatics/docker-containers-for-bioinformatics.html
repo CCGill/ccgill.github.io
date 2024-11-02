@@ -196,15 +196,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This post is intended to give a short practical example of using two key tools to install bioinformatics tools and use them. Both conda and docker are widely used. I have used conda for a little under a decade and only really adopted docker a few years ago, but I can see that containerization is more and more widely used. Hopefully this post can serve as a practical example for those experimenting with these approaches.</p>
-<p>I find tools like conda, pyenv, pip, venv, rig, and renv are all excellent for environment management. They all have a learning curve, but quickly become part of your day-to-day tooling. However, the problem remains that sometimes you are at the start of a new project, or worse halfway through an existing project and you need to install a new tool - this new tool may have new dependencies and in the latter case, may well share dependencies with existing tools, potentially with different versions. The unfortunate truth of the matter is many bioinformaticians spend an unreasonable amount of time getting their tooling setup.</p>
-<p>There are many solutions to this - one I have seen many resort to, is to have a conda environment per tool, to ensure dependencies are handled independently. Whether you use a separate environment for each tool or not, using conda is effective and I will give some basic commands to get started in the <a href="#using-bioconda-to-install-bcftools-and-plink">first part</a> of this post. An alternative approach is to use pre-built docker containers, which I will demonstrate in the <a href="#docker-and-biocontainers-running-bcftools-as-a-container">second half</a> of this post.</p>
+<p>This post is intended to give a short practical example of using two key tools to install bioinformatics tools and use them. Both conda and docker are widely used. I have used conda for a little under a decade and got started with docker a few years ago, but I can see that containerization is more and more widely used. Hopefully this post can serve as a practical example for those getting started with these approaches.</p>
+<p>I find tools like conda, pyenv, pip, venv, rig, and renv are all excellent for environment management. They all have strengths, limitations, and a learning curve, but quickly become part of your day-to-day tooling. However, the problem remains that sometimes you are at the start of a new project, or worse halfway through an existing project and you need to install a new tool - this new tool may have new dependencies, require compilation, and may well share dependencies with existing tools, potentially with different versions. The unfortunate truth of the matter is many bioinformaticians spend an unreasonable amount of time getting their tooling setup.</p>
+<p>There are many solutions to this - one I have seen several resort to, is to have a conda environment per tool, to ensure dependencies are handled independently (note, this can be difficult to manage effectively and collaborate with - the overhead for setting up a working environment increases significantly). Whether you use a separate environment for each tool or not, using conda is effective and I will give some basic commands to get started in the <a href="#using-bioconda-to-install-bcftools-and-plink">first part</a> of this post. An alternative approach is to use pre-built docker containers, which I will demonstrate in the <a href="#docker-and-biocontainers-running-bcftools-as-a-container">second half</a> of this post.</p>
 <section id="using-bioconda-to-install-bcftools" class="level2">
 <h2 class="anchored" data-anchor-id="using-bioconda-to-install-bcftools">Using Bioconda to install bcftools</h2>
-<p>The <a href="https://bioconda.github.io/">bioconda</a> channel contains lots of useful tooling for bioinformatics, meaning it’s possible to use conda to manage some bioinformatics tooling directly. To add the bioconda channel to you conda setup, the bioconda documentation suggests to run the following commands to update your ~/.condarc file.</p>
-<ol type="1">
-<li>Add bioconda to the conda channels</li>
-</ol>
+<p>The <a href="https://bioconda.github.io/">bioconda</a> channel contains lots of useful tooling for bioinformatics, meaning it’s possible to use conda to manage some bioinformatics tooling directly.</p>
+<section id="add-bioconda-to-the-conda-channels" class="level3">
+<h3 class="anchored" data-anchor-id="add-bioconda-to-the-conda-channels">Add bioconda to the conda channels</h3>
+<p>To add the bioconda channel to you conda setup, the bioconda documentation suggests to run step 1 of the below the following commands to update your ~/.condarc file.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> config <span class="at">--add</span> channels bioconda</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> config <span class="at">--add</span> channels conda-forge</span>
@@ -214,48 +214,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="co"># list activate channels as follows</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> config <span class="at">--show</span> channels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="2" type="1">
+</section>
+<section id="installing-and-running-bcftools" class="level3">
+<h3 class="anchored" data-anchor-id="installing-and-running-bcftools">Installing and running bcftools</h3>
+<ol type="1">
 <li>Create and activate your conda environment as usual</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> create <span class="at">-n</span> bcftools-env <span class="at">-y</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> activate bcftools-env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="3" type="1">
+<ol start="2" type="1">
 <li>install bcftools</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> install <span class="at">-c</span> bioconda bcftools <span class="at">-y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="4" type="1">
+<ol start="3" type="1">
 <li>run bcftools</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">bcftools</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="5" type="1">
-<li>Once you have a working environment that you can carry out your analysis in, don’t forget to export the environment yml</li>
+<ol start="4" type="1">
+<li>Once you have a working environment that you can carry out your analysis in, don’t forget to export the environment yaml file. This is necessary to ensure you can recreate the environment yourself.</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>    <span class="ex">conda</span> env export <span class="op">&gt;</span> environment.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Bioconda has gone a long way to remove the overhead of managing all the environment dependencies, understanding the dependencies of all your tools and compiling the source code. I have used the above setup on my personal notebook and also on remote compute environments when working in the cloud. However, conda environments are somewhat slow to setup (admittedly of the order of minutes, or at worst hours, not days, usually)</p>
+<p>Bioconda has removed a lot of the overhead of managing all the environment dependencies, compiling various tools, understanding the dependencies of all your tools and often needing to compile the source code. I have used the above setup on my personal notebook and also on remote compute environments when working in the cloud. In comparison to the past manual setup and management, this is a much better user experience. However, conda environments are somewhat slow to setup, in comparison to containerized solutions (see later).</p>
+</section>
 <section id="reproducing-your-results-recreating-your-conda-environment" class="level3">
 <h3 class="anchored" data-anchor-id="reproducing-your-results-recreating-your-conda-environment">Reproducing your results: recreating your conda environment</h3>
-<p>Note: if you, or a colleague/collaborator later want to recreate an environment to rerun an analysis, you can do so using the environment.yml. The following command: <code>conda env create -f environment.yml</code> will recreate the environment. This is a really powerful tool for creating portable environments, and enabling reproducible research.</p>
+<p>Note: if you, or a colleague/collaborator, later want to recreate an environment to rerun an analysis, you can do so using the environment.yml. The following command: <code>conda env create -f environment.yml</code> will recreate the environment. This is a really powerful tool for creating portable environments, and enabling reproducible research.</p>
 </section>
 </section>
 <section id="docker-and-biocontainers-running-bcftools-as-a-container" class="level2">
 <h2 class="anchored" data-anchor-id="docker-and-biocontainers-running-bcftools-as-a-container">Docker and biocontainers: running bcftools as a container</h2>
-<p>In some cases tools are already available from public container repositories - a good example of this is bcftools in the <a href="https://biocontainers.pro/">biocontainers</a> container registry. After selecting a docker container version from the <a href="https://biocontainers.pro/tools/bcftools">bcftools page</a>, it can be run as follows (we have chosen the image <code>quay.io/biocontainers/bcftools:1.21--h8b25389_0</code>):</p>
+<p>In some cases tools are already available from public container repositories - a good example of this is bcftools in the <a href="https://biocontainers.pro/">biocontainers</a> container registry - if you read the documentation you will see that biocontainers is tightly tied to bioconda, but I’ll leave that to the reader to look into and here I’ll focus on the practical steps to use the tool.</p>
+<p>After selecting a docker container version from the <a href="https://biocontainers.pro/tools/bcftools">bcftools page</a>, it can be run as follows (we have chosen the image <code>quay.io/biocontainers/bcftools:1.21--h8b25389_0</code>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull quay.io/biocontainers/bcftools:1.21--h8b25389_0</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run quay.io/biocontainers/bcftools:1.21--h8b25389_0 bcftools <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that after the <code>docker run &lt;image&gt;</code>, the command starts that you want to run in the shell. This is a common pattern.</p>
-<p>If you are familiar with docker and containerization then you will be aware that this has executed a command in a container on your local machine. Note that machine resources do not automatically scale to your system, there are usually limits enforced by the docker client. You will need to manage allowed resources, for instance memory limits, via the docker client on your machine to ensure that enough memory is made available (for Mac and Windows you can do this via the docker desktop client).</p>
-<p>To make use of this tooling then, we need to ensure the input and output directories are mounted to the container. This is done with a <code>-v local-path:container-path</code> argument to the container.</p>
-<p>In its simplest form, to run a docker container on the current location, we can mount the working directory as follows:</p>
+<p>If you are familiar with docker and containerization then you will be aware that this has executed a command in an isolated container on your local machine. Container resources do not automatically scale to your system resources, there are usually limits enforced by the docker client. You will need to manage allowed resources, for instance memory limits, via the docker client on your machine to ensure that enough memory is made available (for Mac and Windows you can do this via the docker desktop client).</p>
+<p>To make use of this tooling then, we need to ensure the input and output directories are mounted to the container. This is done with a <code>-v local-path:container-path</code> argument to the container, mounting the local directory (specified here as <code>local-path</code> to the directory in the container <code>container-path</code>).</p>
+<p>In its simplest form, to run a command in a docker container on the current working directory, we can mount the working directory as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-v</span> <span class="st">"</span><span class="va">${PWD}</span><span class="st">:/tmp/"</span> quay.io/biocontainers/bcftools:1.21--h8b25389_0 ls /tmp/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -266,8 +271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    quay.io/biocontainers/bcftools:1.21--h8b25389_0 <span class="dt">\</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    bcftools query <span class="at">-l</span> /tmp/test-file-chr22.vcf.gz <span class="op">&gt;</span> /tmp/sample-id-list.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The command <code>bcftools query -l /tmp/test-file-chr22.vcf.gz &gt; /tmp/sample-id-list.txt</code> will have written the list of sample IDs to a file <code>sample-id-list.txt</code> that now exists on your machine in the current working directory.</p>
-<p>Now, <code>${PWD}</code> contains the path to you working directory (if you’re not familiar with this, type <code>echo "${PWD}"</code> into the command line and it will print the path to your current directory, usually achieved with <code>pwd</code>). We can thus generalize the above to mount any directory to the docker container. If you wanted to mount an input and an output directory, you could do this as follows:</p>
+<p>The command <code>bcftools query -l /tmp/test-file-chr22.vcf.gz &gt; /tmp/sample-id-list.txt</code> will have written the list of sample IDs to a file <code>sample-id-list.txt</code> to the <code>/tmp/</code> directory on the container, so that now exists on your machine in the current working directory.</p>
+<p>Now, to understand this a little better: <code>${PWD}</code> contains the path to you working directory (if you’re not familiar with this, type <code>echo "${PWD}"</code> into the command line and it will print the path to your current directory, usually achieved with <code>pwd</code>). We can thus generalize the above to mount any directory to the docker container. If you wanted to mount an input and an output directory, you could do this as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="dt">\</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-v</span> <span class="st">"/path/to/input/directory:/tmp/input/"</span> <span class="dt">\</span></span>
@@ -275,10 +280,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    quay.io/biocontainers/bcftools:1.21--h8b25389_0 <span class="dt">\</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    bcftools query <span class="at">-l</span> /tmp/input/test-file-chr22.vcf.gz <span class="op">&gt;</span> /tmp/output/sample-id-list.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Notice that we have mounted the input directory to /tmp/input and the output directory to /tmp/output. The use of the directories in the bcftools command that is executed is updated accordingly.</p>
+<p>Notice that we have mounted the input directory to /tmp/input and the output directory to /tmp/output. These are updated accordingly in the bcftools command that is being run on the container.</p>
 <section id="reproducing-your-results" class="level3">
 <h3 class="anchored" data-anchor-id="reproducing-your-results">Reproducing your results:</h3>
-<p>One major advantage with using docker containers is that you can simply rerun the commands to pull the same image and run the same commands (make sure you script the commands you use).</p>
+<p>One major advantage of using docker containers is that you can simply rerun the commands to pull the same image and run the same commands. Two key points stand out:</p>
+<ul>
+<li>make sure you script the commands you use, and</li>
+<li>be wary of the <code>latest</code> tag: this is great for exploratory work but, as the name suggests, points to the latest version of the container image, and this will change over time.</li>
+</ul>
 
 
 </section>

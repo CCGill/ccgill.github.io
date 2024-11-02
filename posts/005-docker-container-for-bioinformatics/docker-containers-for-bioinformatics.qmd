@@ -37,27 +37,31 @@ To add the bioconda channel to you conda setup, the bioconda documentation sugge
 
 ### Installing and running bcftools 
 
-2. Create and activate your conda environment as usual
+1. Create and activate your conda environment as usual
+
 
 ```{bash}
 #| eval: false
     conda create -n bcftools-env -y
     conda activate bcftools-env
 ```
-3. install bcftools 
+
+2. install bcftools 
 
 ```{bash}
 #| eval: false
     conda install -c bioconda bcftools -y
 ```
 
-4. run bcftools
+3. run bcftools
+
 ```{bash}
 #| eval: false
     bcftools --version
 ```
 
-5. Once you have a working environment that you can carry out your analysis in, don't forget to export the environment yaml file.  This is necessary to ensure you can recreate the environment yourself.
+4. Once you have a working environment that you can carry out your analysis in, don't forget to export the environment yaml file.  This is necessary to ensure you can recreate the environment yourself.
+
 ```{bash}
 #| eval: false
     conda env export > environment.yml
