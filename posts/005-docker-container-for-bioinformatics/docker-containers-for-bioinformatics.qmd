@@ -39,6 +39,7 @@ To add the bioconda channel to you conda setup, the bioconda documentation sugge
 
 1. Create and activate your conda environment as usual
 
+
 ```{bash}
 #| eval: false
     conda create -n bcftools-env -y
