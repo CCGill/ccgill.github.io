@@ -238,8 +238,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>/path/to/project/directory/</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>├── data</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>│   ├── 00_source</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>│   ├── 01_staging</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>│   └── 02_final</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>│   ├── 01_intermediate</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>│   └── 02_processed</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>├── figures</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>├── notebooks</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>│   └── 00-install-kernel.R</span>
@@ -262,16 +262,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>The existence of the folders is a useful reminder how to keep the output and working files organised.</li>
 <li>The only rule the user needs to remember is to keep all running code in the notebooks directory and to run renv::snapshot() periodically.</li>
-<li>This is much faster than <code>conda</code>, and after supporting several users using conda, I have found the conda dependency management for R packages to be unreliable at times.</li>
+<li>This is much faster than <code>conda</code>, and after both my own experience and supporting several users using conda, I have found the conda dependency management for R packages to be unreliable at times.</li>
 </ul></li>
 </ul>
 <p>The immediate availability of the jupyter kernel is another key efficiency here, following project setup I can immediately open jupyter notebooks with the relevant R kernel in the notebooks directory.</p>
 <p>Note that it can also be extended to python virtual environments or conda managed python by keeping all environment configuration in the root directory (for example requirements.txt/environment.yml files, venv folders).</p>
 <section id="enabling-renv-in-the-notebooks-folder" class="level2">
 <h2 class="anchored" data-anchor-id="enabling-renv-in-the-notebooks-folder">Enabling renv in the notebooks folder</h2>
-<p>This was both the biggest surprise when I started using renv, and the trickiest part to get right in this project structure. As noted, any R session started in the notebooks folder will use the renv stored in the root directory. This is enabled by creating a .Rprofile file in the notebooks directory containing the following line (as described in a GitHub issue <a href="https://github.com/rstudio/renv/issues/946">here</a>):</p>
+<p>This was both the biggest surprise when I started using renv, and the trickiest part to get right in this project structure. As noted, I have configured this script to ensure that any R session started in the notebooks folder will use the renv stored in the root directory. This is not the case out-of-the-box with renv, but is enabled by creating a .Rprofile file in the notebooks directory containing the following line (as described in a GitHub issue <a href="https://github.com/rstudio/renv/issues/946">here</a>):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>owd &lt;- setwd(".."); source("renv/activate.R"); setwd(owd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The .Rprofile file is run when an R session is started (see <a href="https://rstudio.github.io/renv/">here</a> for more details about renv, and good pointers to the flexible but relatively complex configuration options for R). This file essentially changes the working directory to the root (parent) directory, activates the renv R environment there, and changes directory back to the notebooks directory again.</p>
+<p>When activated, the renv configuration must be stored in the working directory - this .Rprofile changes the working directory to enable the activation. The .Rprofile file is run when an R session is started (see <a href="https://rstudio.github.io/renv/">here</a> for more details about renv, and good pointers to the flexible but relatively complex configuration options for R). This file essentially changes the working directory to the root (parent) directory, activates the renv R environment there, and changes directory back to the notebooks directory again.</p>
 <p>I hope this script is useful to others - it has proven invaluable for me, and I expect to optimize it and add more features/options in future. It is publicly available on GitHub <a href="https://github.com/CCGill/create-renv-analysis-project">here</a>.</p>
 
 

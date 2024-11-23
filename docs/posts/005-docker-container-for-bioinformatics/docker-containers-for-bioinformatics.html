@@ -9,7 +9,7 @@
 <meta name="author" content="CG">
 <meta name="dcterms.date" content="2024-11-01">
 
-<title>Bioconda and Docker containers for bioinformatics – Dr.&nbsp;C. C. Gill</title>
+<title>Bioconda and Biocontainers Docker containers for bioinformatics – Dr.&nbsp;C. C. Gill</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Bioconda and Docker containers for bioinformatics</h1>
+      <h1 class="title">Bioconda and Biocontainers Docker containers for bioinformatics</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">docker</div>
                 <div class="quarto-category">bioinformatics</div>
@@ -196,9 +196,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This post is intended to give a short practical example of using two key tools to install bioinformatics tools and use them. Both conda and docker are widely used. I have used conda for a little under a decade and got started with docker a few years ago, but I can see that containerization is more and more widely used. Hopefully this post can serve as a practical example for those getting started with these approaches.</p>
-<p>I find tools like conda, pyenv, pip, venv, rig, and renv are all excellent for environment management. They all have strengths, limitations, and a learning curve, but quickly become part of your day-to-day tooling. However, the problem remains that sometimes you are at the start of a new project, or worse halfway through an existing project and you need to install a new tool - this new tool may have new dependencies, require compilation, and may well share dependencies with existing tools, potentially with different versions. The unfortunate truth of the matter is many bioinformaticians spend an unreasonable amount of time getting their tooling setup.</p>
-<p>There are many solutions to this - one I have seen several resort to, is to have a conda environment per tool, to ensure dependencies are handled independently (note, this can be difficult to manage effectively and collaborate with - the overhead for setting up a working environment increases significantly). Whether you use a separate environment for each tool or not, using conda is effective and I will give some basic commands to get started in the <a href="#using-bioconda-to-install-bcftools-and-plink">first part</a> of this post. An alternative approach is to use pre-built docker containers, which I will demonstrate in the <a href="#docker-and-biocontainers-running-bcftools-as-a-container">second half</a> of this post.</p>
+<p>This post is intended to give a short practical example of using two widely used methods, conda and docker, to use bioinformatics tools while avoiding much of the overhead of installing and compiling them. I have used conda for a little under a decade and got started with docker a few years ago. Hopefully this post can serve as a practical example for those getting started with these approaches. I’ve included docker here as it is extremely efficient, containerization is more and more widely used, and integrated into many workflow management tools <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>I find tools like conda, pyenv, pip, venv, rig, and renv are all excellent for environment management. They all have strengths, limitations, and a learning curve, but quickly become part of your day-to-day tooling. However, the problem remains that sometimes you are at the start of a new project, or worse halfway through an existing project and you need to install a new tool - this new tool may have new dependencies, require compilation, and may well share dependencies with existing tools, potentially with different versions.</p>
+<p>There are many solutions to this - one I have seen several resort to is a conda environment per tool, to ensure dependencies are handled independently (note, this can be difficult to manage effectively and collaborate with - the overhead for setting up a working environment increases significantly). Whether you use a separate environment for each tool or not, using conda is effective and I will give some basic commands to get started in the <a href="#using-bioconda-to-install-bcftools-and-plink">first part</a> of this post. An alternative approach is to use pre-built docker containers, which I will demonstrate in the <a href="#docker-and-biocontainers-running-bcftools-as-a-container">second half</a> of this post.</p>
 <section id="using-bioconda-to-install-bcftools" class="level2">
 <h2 class="anchored" data-anchor-id="using-bioconda-to-install-bcftools">Using Bioconda to install bcftools</h2>
 <p>The <a href="https://bioconda.github.io/">bioconda</a> channel contains lots of useful tooling for bioinformatics, meaning it’s possible to use conda to manage some bioinformatics tooling directly.</p>
@@ -293,7 +293,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Workflow management tools will be the subject of a future post - I will likely post on <a href="https://www.nextflow.io/">nextflow</a> and <a href="https://snakemake.readthedocs.io/en/stable/">snakemake</a>)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
