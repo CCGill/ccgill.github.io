@@ -116,6 +116,27 @@
     "href": "index.html",
     "title": "blog",
     "section": "",
-    "text": "Bioconda and Biocontainers Docker containers for bioinformatics\n\n\n\n\n\n\ndocker\n\n\nbioinformatics\n\n\ncontainerization\n\n\n\n\n\n\n\n\n\nNov 1, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nWorking with a local postgres database docker container\n\n\n\n\n\n\ndata-analysis\n\n\ndata-engineering\n\n\nSQL\n\n\nintroductory\n\n\ndocker\n\n\ncontainerization\n\n\n\nSetting up and connecting to a local postgresql docker container\n\n\n\n\n\nOct 31, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nResources for learning R\n\n\n\n\n\n\nresources\n\n\nR\n\n\ndata-science\n\n\nsoftware-development\n\n\n\n\n\n\n\n\n\nOct 31, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nPlanned/upcoming posts\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 31, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nProject creation - encouraging reproducibility with renv\n\n\n\n\n\n\ndata-science\n\n\nreproducible\n\n\nR\n\n\n\nAutomating renv project creation\n\n\n\n\n\nOct 29, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 26, 2024\n\n\nCG\n\n\n\n\n\n\nNo matching items"
+    "text": "Genetics Resources\n\n\n\n\n\n\nresources\n\n\ngenetics\n\n\ndata-science\n\n\n\n\n\n\n\n\n\nNov 23, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nBioconda and Biocontainers Docker containers for bioinformatics\n\n\n\n\n\n\ndocker\n\n\nbioinformatics\n\n\ncontainerization\n\n\n\n\n\n\n\n\n\nNov 1, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nWorking with a local postgres database docker container\n\n\n\n\n\n\ndata-analysis\n\n\ndata-engineering\n\n\nSQL\n\n\nintroductory\n\n\ndocker\n\n\ncontainerization\n\n\n\nSetting up and connecting to a local postgresql docker container\n\n\n\n\n\nOct 31, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nResources for learning R\n\n\n\n\n\n\nresources\n\n\nR\n\n\ndata-science\n\n\nsoftware-development\n\n\n\n\n\n\n\n\n\nOct 31, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nPlanned/upcoming posts\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 31, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nProject creation - encouraging reproducibility with renv\n\n\n\n\n\n\ndata-science\n\n\nreproducible\n\n\nR\n\n\n\nAutomating renv project creation\n\n\n\n\n\nOct 29, 2024\n\n\nCG\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 26, 2024\n\n\nCG\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/006-genetics-resources/genetics-resources.html",
+    "href": "posts/006-genetics-resources/genetics-resources.html",
+    "title": "Genetics Resources",
+    "section": "",
+    "text": "I’m fortunate to have worked in areas I find fascinating, so when people ask me about a topic I work on I nearly always enjoy discussing it, and if they’re interested enough I like to pass on some useful resources I’ve found. However, I rely on bookmarks and google far too much to find resources, so this post is intended to enable me and hopefully others to find these references.\nI was fortunate to work in the labs of Jonathan Marchini and Simon Myers on some aspects of population genetics and functional genomics. This post will focus on genetics resources, and initially mostly population genetics. As I have very limited time today I will add just a few free learning resources from population genetics and later will add some of the others I have planned."
+  },
+  {
+    "objectID": "posts/006-genetics-resources/genetics-resources.html#population-genetics-resources",
+    "href": "posts/006-genetics-resources/genetics-resources.html#population-genetics-resources",
+    "title": "Genetics Resources",
+    "section": "Population Genetics Resources",
+    "text": "Population Genetics Resources\nWhen I have time I will add in a recommended reading list of books I have enjoyed and that give a good grounding in population genetics, both empirical and theoretical.\n\nGraham Coop’s Population and Quantitative Genetics book - population genetics notes from the Coop lab, this is an immensely useful resource. I really appreciated the coverage of many aspects of the subject that are “well known”, and therefore no longer referenced, but often difficult to pin down for newcomers to the field1.\n\nThe Coop lab blog\n\n\nJonathan Pritchard’s An Owner’ Guide to the Human Genome: an introduction to human population genetics, variation and disease - an excellent resource from Jonathan Pritchard. The Pritchard lab page is well worth a visit."
+  },
+  {
+    "objectID": "posts/006-genetics-resources/genetics-resources.html#footnotes",
+    "href": "posts/006-genetics-resources/genetics-resources.html#footnotes",
+    "title": "Genetics Resources",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nI think everyone who has worked in research and had to find their way around a new field will be familiar with this - that when a concept or technique is well-known enough it is no longer referenced in the literature (except PhD Theses or occasionally survey papers). The challenge is to discern when a concept is well-known enough that it no longer requires explanation or referencing in new publications. This is even more of a challenge in interdisciplinary work in which collaborating scientists have differing views of what is “well-known”.↩︎"
   }
 ]
