@@ -52,8 +52,8 @@ The final project directory structure is as follows (having removed all of the a
 /path/to/project/directory/
 ├── data
 │   ├── 00_source
-│   ├── 01_staging
-│   └── 02_final
+│   ├── 01_intermediate
+│   └── 02_processed
 ├── figures
 ├── notebooks
 │   └── 00-install-kernel.R
@@ -76,7 +76,7 @@ I have found such a structure useful as it ensures
 - **Ease of use for me**:
     - The existence of the folders is a useful reminder how to keep the output and working files organised.
     - The only rule the user needs to remember is to keep all running code in the notebooks directory and to run renv::snapshot() periodically.
-    - This is much faster than `conda`, and after supporting several users using conda, I have found the conda dependency management for R packages to be unreliable at times.
+    - This is much faster than `conda`, and after both my own experience and supporting several users using conda, I have found the conda dependency management for R packages to be unreliable at times.
 
 The immediate availability of the jupyter kernel is another key efficiency here, following project setup I can immediately open jupyter notebooks with the relevant R kernel in the notebooks directory.
 
@@ -84,12 +84,10 @@ Note that it can also be extended to python virtual environments or conda manage
 
 ## Enabling renv in the notebooks folder
 
-This was both the biggest surprise when I started using renv, and the trickiest part to get right in this project structure.  As noted, any R session started in the notebooks folder will use the renv stored in the root directory.  This is enabled by creating a .Rprofile file in the notebooks directory containing the following line (as described in a GitHub issue [here](https://github.com/rstudio/renv/issues/946)):
+This was both the biggest surprise when I started using renv, and the trickiest part to get right in this project structure.  As noted, I have configured this script to ensure that any R session started in the notebooks folder will use the renv stored in the root directory.  This is not the case out-of-the-box with renv, but is enabled by creating a .Rprofile file in the notebooks directory containing the following line (as described in a GitHub issue [here](https://github.com/rstudio/renv/issues/946)):
 ```default
 owd <- setwd(".."); source("renv/activate.R"); setwd(owd)
 ```
-The .Rprofile file is run when an R session is started (see [here](https://rstudio.github.io/renv/) for more details about renv, and good pointers to the flexible but relatively complex configuration options for R).  This file essentially changes the working directory to the root (parent) directory, activates the renv R environment there, and changes directory back to the notebooks directory again.
-
-
+When activated, the renv configuration must be stored in the working directory - this .Rprofile changes the working directory to enable the activation.  The .Rprofile file is run when an R session is started (see [here](https://rstudio.github.io/renv/) for more details about renv, and good pointers to the flexible but relatively complex configuration options for R).  This file essentially changes the working directory to the root (parent) directory, activates the renv R environment there, and changes directory back to the notebooks directory again.
 
 I hope this script is useful to others - it has proven invaluable for me, and I expect to optimize it and add more features/options in future.  It is publicly available on GitHub [here](https://github.com/CCGill/create-renv-analysis-project).

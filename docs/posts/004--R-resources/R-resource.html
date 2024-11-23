@@ -145,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">October 31, 2024</p>
+        <p class="date-modified">November 15, 2024</p>
       </div>
     </div>
       
@@ -163,31 +163,39 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>R is described as “a free software environment for statistical computing and graphics” at the <a href="https://www.r-project.org/">R project for Statistical Computing</a>. For me the strength of R is not only as a programming language but also a powerful statistical computing system, it is powerful, relatively easy to use for statistical analysis and has excellent facilities to easily produce publication quality plots.</p>
+<p>This is a collection of resources I have found over the years that I find myself returning to or recommending to others.</p>
+<p>R is described as “a free software environment for statistical computing and graphics” at the <a href="https://www.r-project.org/">R project for Statistical Computing</a>. For me the strength of R is not only as a programming language but also a powerful statistical computing system, it is relatively easy to use for statistical analysis and has excellent facilities to easily produce publication quality plots.</p>
 <p>Coming from a background in pure mathematics, my first exposure to coding and software development was in MatLab, MAGMA and GAP. I later branched out into C, C++ and Python. My exposure to MAGMA and GAP was mainly in algebraic and combinatoric algorithms, but it was in R that I first really got to grips with statistical computing. Over the years I have written several R packages for data visualisation tools, tools to analyse electronic health data, and developed highly optimized R packages providing statistical machine learning algorithms for the analysis of large scale single cell RNA-seq datasets. I have optimized my R code extensively, integrated C++ code, made use of Rmarkdown (and now quarto) for data analysis and building websites, and it is still my primary tool for data visualisation. I have also taught students to use R over several years, so hopefully the resources I point to here will be useful.</p>
 <section id="free-resources" class="level2">
 <h2 class="anchored" data-anchor-id="free-resources">Free Resources</h2>
-<section id="software-development-and-data-science" class="level3">
-<h3 class="anchored" data-anchor-id="software-development-and-data-science">Software Development and Data Science</h3>
+<section id="data-science-and-software-development" class="level3">
+<h3 class="anchored" data-anchor-id="data-science-and-software-development">Data Science and software development</h3>
 <p>Hadley Wickham and the posit team have produced some excellent resources, which tend to promote their tidyverse tooling.</p>
 <ul>
 <li><a href="https://r4ds.hadley.nz/">R for Data Science</a>: The introductory book from Hadley Wickham, an excellent resource for beginners and intermediate users alike.</li>
 <li><a href="https://r-pkgs.org/">R packages</a>: Hadley WIckham and Jennifer Bryan’s excellent introduction to building R packages.</li>
 <li><a href="https://adv-r.hadley.nz/">Advanced R</a>: An advanced book from Hadley Wickham - I thoroughly enjoyed it, the content is excellent and well written, but is for established R users.</li>
+<li><a href="https://rstats.wtf/">What they forgot to teach you about R</a> Although still a work in progress, this site has some very useful context on how R works and also generally good advice on tried-and-tested good habits to adopt.</li>
 </ul>
-<p>Roger Peng has produced a handy book re. software development in R. This is excellent if you’re serious about developing packages, but may not be for you if you are mostly interested in analysis.</p>
+<p>Roger Peng has produced a handy book covering some aspects of software development in R. This is excellent if you’re serious about developing packages, but may not be for you if you are mostly interested in analysis.</p>
 <ul>
 <li><a href="https://bookdown.org/rdpeng/RProgDA/">Mastering Software Development with R</a>: a very useful book from Roger Peng and others.</li>
 </ul>
-<p>Rafael Irizarry has also written two introductory courses, which start from scratch but equip you to carry out many statistical analyses in R.</p>
+</section>
+</section>
+<section id="introductory-bookscourses" class="level2">
+<h2 class="anchored" data-anchor-id="introductory-bookscourses">Introductory books/courses</h2>
+<p>The excellent R for Data Science book referenced above is one of many good introductory books and courses available, all of which have a different perspective.</p>
+<p>The following books start more or less “from scratch”, so are excellent if you’re just getting started.</p>
 <ul>
 <li><a href="https://github.com/genomicsclass/labs?tab=readme-ov-file">Data Analysis for the Life Sciences</a>: a useful introductory book from Rafael Irizarry</li>
 <li><a href="https://rafalab.dfci.harvard.edu/dsbook/">Introduction to Data Science: Data Analysis and Prediction Algorithms with R</a>: another book from Rafael Irizarry</li>
+<li><a href="https://bookdown.org/rdpeng/exdata/">Exploratory Data Analysis with R</a> Roger Peng’s introductory book on exploratory data analysis. Some of the chapters are a little brief, but it has several good starting points.</li>
 </ul>
 <p>Robin Evans’ University of Oxford <a href="https://www.stats.ox.ac.uk/~evans/statprog/index2.htm">Statistical Computing course</a></p>
-</section>
 <section id="integrating-c-with-r-through-rcpp" class="level3">
 <h3 class="anchored" data-anchor-id="integrating-c-with-r-through-rcpp">Integrating C++ with R through Rcpp</h3>
+<p>In some cases, optimizing your R code can only go so far, and some lower-level programming is required. I’ve found the Rcpp suite of packages very helpful in automating the build and bindings to expose C++ code in my R packages. Particularly Rcpp, RcppArmadillo and RcppEigen.</p>
 <ul>
 <li><a href="https://www.rcpp.org/">Rcpp</a></li>
 <li><a href="https://gallery.rcpp.org/">Rcpp gallery</a></li>
@@ -195,11 +203,19 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="visualisation" class="level3">
 <h3 class="anchored" data-anchor-id="visualisation">Visualisation</h3>
+<p>R is capable of producing beautiful publication-ready figures. While I don’t subscribe to the notion that one tool is inherently better than any others, I find the ggplot2 library and in particular the grammar of graphics expressive and efficient. This is particularly helpful during exploratory analyses, helping to iterate quickly.</p>
 <ul>
 <li><a href="https://ggplot2.tidyverse.org/articles/ggplot2.html">Introduction to ggplot2</a>: an introduction to ggplot2 from the tidyverse team</li>
 <li><a href="https://www.datanovia.com/en/lessons/introduction-to-ggplot2/">An introduction to ggplot2</a>: a useful introduction with examples.</li>
 <li><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualisation</a> an excellent introduction from cowplot developer Claus O. Wilke</li>
 <li><a href="https://ggplot2-book.org/introduction.html">ggplot2 book</a> : not the best place to start for beginners, but worth reading once familiar with the basics (if you are a beginner, stick to R for Data Science for the basics).</li>
+<li><a href="https://r-graph-gallery.com/">R graph gallery</a> this is an excellent resource, particulary when getting started.</li>
+</ul>
+</section>
+<section id="code-style" class="level3">
+<h3 class="anchored" data-anchor-id="code-style">Code Style</h3>
+<ul>
+<li><a href="https://style.tidyverse.org/">The tidyverse style guide</a> Personally, I have found this an excellent resource, and comparison with the Google style guide was time well-spent.</li>
 </ul>
 </section>
 <section id="other-useful-resources" class="level3">
