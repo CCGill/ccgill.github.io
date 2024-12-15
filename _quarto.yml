@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "!upcoming-posts-notes/"
 
 website:
   title: "Dr. C. C. Gill"
