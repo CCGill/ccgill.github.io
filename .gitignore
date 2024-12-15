@@ -4,3 +4,6 @@
 /docs/notes/
 /notes/
 .DS_store
+.Rhistory
+.Rprofile
+.Rproj.user
