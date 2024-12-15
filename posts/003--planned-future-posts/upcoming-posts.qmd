@@ -11,11 +11,11 @@ I plan to write on a number of topics, more or less documenting useful tools and
 - [] Collected resources and strategies for
     - [x] **learning and becoming effective in R**
     - [] **learning and becoming effective in Python**
-    - [] **population genetics resources**
+    - [x] **population genetics resources**
 - [] **DataFrames**: base R, tibbles, data.table, Pandas and Polars - my perspective coming from R to the python ecosystem.
 - [] Reflections on software engineering for research data science vs. production code: lessons learned.
 - [] Building R packages - an introduction
-- [] Optimizing R code with C++ and Rcpp, RcppEigen, and RcppArmadillo by example.
+- [] Optimizing R code with C++: Rcpp, RcppEigen, and RcppArmadillo by example.
 - [] Incorporating python code into an R package.
 - [] Rcpp Modules, exporting C++ classes to R.
 - [] A repository structure for **developing alembic migrations** (docker + postgresql + python)
