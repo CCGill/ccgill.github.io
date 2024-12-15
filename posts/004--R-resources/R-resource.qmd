@@ -2,7 +2,7 @@
 title: Resources for learning R
 author: "CG"
 date: "2024-10-31"
-date-modified: "2024-11-15"
+date-modified: "2024-12-15"
 categories: [resources, R, data-science, software-development]
 ---
 
@@ -63,8 +63,12 @@ R is capable of producing beautiful publication-ready figures.  While I don't su
 
 ### Other useful resources
 
-- [The R blog](https://blog.r-project.org/) for discussions about upcoming features in R.  Probably for advanced users.
+- [The Arrow R cookbook](https://arrow.apache.org/cookbook/r/) an excellent cookbook of approaches to use arrow tooling in R.
 - [R Manuals](https://cran.r-project.org/manuals.html) Again, this is rather a lot of detail if you are starting out, but for an advanced user it can be a useful resource.
 - [Writing R extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html) This is an excellent resource once you're established with building R packages.  To get started I recommend the book by Hadley Wickham and Jennifer Bryan linked above.
+
+### Selected blogs and resources
+
+- [The R blog](https://blog.r-project.org/) for discussions about upcoming features in R.  Probably for advanced users.
 
 Several of these links I return to time and time again, so I am sure I will return to this page to dig them out in the near future.

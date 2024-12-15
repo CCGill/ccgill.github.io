@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-162b9ee3ced91340a3634fff74c81f44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -144,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 23, 2024</p>
+        <p class="date-modified">December 7, 2024</p>
       </div>
     </div>
       
@@ -162,19 +162,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>I’m fortunate to have worked in areas I find fascinating, so when people ask me about a topic I work on I nearly always enjoy discussing it, and if they’re interested enough I like to pass on some useful resources I’ve found. However, I rely on bookmarks and google far too much to find resources, so this post is intended to enable me and hopefully others to find these references.</p>
-<p>I was fortunate to work in the labs of <a href="https://jmarchini.org/">Jonathan Marchini</a> and <a href="https://myersgroup.github.io/">Simon Myers</a> on some aspects of population genetics and functional genomics. This post will focus on genetics resources, and initially mostly population genetics. As I have very limited time today I will add just a few free learning resources from population genetics and later will add some of the others I have planned.</p>
+<p>I have been lucky to have worked in some diverse and fascinating research areas - i love to discuss it and to pass on some useful resources I’ve found. However, I rely on bookmarks and google far too much to find resources, so this post is intended to enable me and hopefully others to find some useful references.</p>
+<p>I was fortunate to work in the labs of <a href="https://jmarchini.org/">Jonathan Marchini</a> and <a href="https://myersgroup.github.io/">Simon Myers</a> on some aspects of population genetics and functional genomics. This post will focus on genetics resources, and initially mostly population genetics. As I have very limited time today I will add just a few free learning resources from population genetics and will later update with some of the others I have planned.</p>
 <section id="population-genetics-resources" class="level2">
 <h2 class="anchored" data-anchor-id="population-genetics-resources">Population Genetics Resources</h2>
-<p>When I have time I will add in a recommended reading list of books I have enjoyed and that give a good grounding in population genetics, both empirical and theoretical.</p>
 <ul>
 <li><a href="https://github.com/cooplab/popgen-notes/releases">Graham Coop’s Population and Quantitative Genetics book</a> - population genetics notes from <a href="">the Coop lab</a>, this is an immensely useful resource. I really appreciated the coverage of many aspects of the subject that are “well known”, and therefore no longer referenced, but often difficult to pin down for newcomers to the field<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.<br>
 </li>
 <li><a href="https://gcbias.org">The Coop lab blog</a></li>
 </ul>
 <ul>
-<li><a href="https://web.stanford.edu/group/pritchardlab/HGbook.html">Jonathan Pritchard’s An Owner’ Guide to the Human Genome: an introduction to human population genetics, variation and disease</a> - an excellent resource from Jonathan Pritchard. The <a href="https://web.stanford.edu/group/pritchardlab/home.html">Pritchard lab page</a> is well worth a visit.</li>
+<li><a href="https://web.stanford.edu/group/pritchardlab/HGbook.html">Jonathan Pritchard’s An Owner’s Guide to the Human Genome: an introduction to human population genetics, variation and disease</a> - an excellent resource from Jonathan Pritchard. The <a href="https://web.stanford.edu/group/pritchardlab/home.html">Pritchard lab page</a> is well worth a visit.</li>
 </ul>
+<p>When I have time I will add in a recommended reading list of books I have enjoyed and that give a good grounding in population genetics, both empirical and theoretical.</p>
 
 
 </section>
@@ -268,8 +268,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -380,7 +378,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
