@@ -1,0 +1,221 @@
+---
+title: Working with large datasets with Arrow
+author: "CG"
+date: "2024-12-15"
+date-modified: "2025-02-08"
+categories: [R, arrow, data-science]
+---
+
+It is becoming more and more common to work with large datasets - since `large` seems to change frequently, I'll be more specific: data that is too large to read into memory, or for which the I/O time is too large to rely on in any reasonable time-frame for the intended use.
+
+Most long-term R users I know seem to fall into two camps - they either apply base R's read.table/read.csv or use `readr`'s offerings.  The latter offerings are an impressive suite of tools that brought improvements and a helpful UI by comparison with the base R offerings, and ones that I usually recommend to newer users[^1]. 
+
+[^1]: Previously I  have recommended `data.table`'s fread (and fwrite), but I found that new users were often confused when they stumbled across the differences between a data.table and a data.frame or tibble.  The data.table tooling is highly effective, I've used it for manipulations of genomic data that simply weren't possible with less capable libraries, but there are differences to the data.frame that can silently cause issues in pipelines if not accounted for.
+
+When faced with data that cannot be read into memory, or for which the I/O time is intolerably large, there are a few options: In the past I have relied on relatively complex workflows to process data in parallel chunks and subsequently aggregated it. Over the last few years, however, I have found the Arrow data structures and computational engine to be a game-changer.  The performance gains are immense when reading data into an arrow structure and processing it, or (more often) from "lazily" loading the data and running optimized queries.  As importantly, these have been made readily available to R users familiar with the dplyr syntax, via the implementation of the dplyr backend in the arrow package. The aim of this post is to give a very simple basic example to demonstrate using it, and also address a workaround I have found useful recently.
+
+# Using Arrow to lazily evaluate queries
+
+It's possible to read data into memory using arrow, but I won't cover that here.  Instead, we'll work with multi-file, or very large, datasets.  It is common practice to partition data when storing it in parquet format, and when the partitioning is well-designed this can greatly speed up analytics workflows by minimizing data parsed.
+
+The arrow package is well documented in the [Arrow R Cookbook](https://arrow.apache.org/cookbook/r/).  I'd encourage anyone planning to use this tooling to get familiar with the documentation re. the intended use of the package.
+
+```{r, output=FALSE}
+# For completeness, we include dependencies here to be explicit, though I suggest these lines could be excluded 
+#  and a docker or renv/rig setup used to ensure the workflow is reproducible.
+loadNamespace('arrow')
+loadNamespace('fs')
+loadNamespace('dplyr')
+loadNamespace('glue')
+loadNamespace('readr')
+```
+
+For the sake of simplicity we make multiple copies of the iris dataset in csv format,
+with a single data_version column indicating the file the data came from.
+
+```{r setup-working-dir}
+td = tempfile()
+working_dir <- fs::path(td, "iris")
+fs::dir_create(working_dir)
+```
+
+```{r clear-working-dir, echo=FALSE}
+if(fs::is_dir(working_dir)){
+  #conditional block for development - removes the temporary directory if already exists
+  unlink(working_dir, recursive=T)
+}
+fs::dir_create(working_dir)
+```
+
+```{r create-small-partitioned-dataset}
+for (ind in seq(1,5)){
+  fname <- glue::glue("iris-{ind}.csv")
+  
+  iris |> 
+    dplyr::mutate(data_version = ind) |> 
+    readr::write_csv(fs::path(working_dir, fname))
+}
+
+list.files(working_dir)
+```
+
+Next we read in the data as an Arrow dataset.  This function can take a single file, or a folder containing a partitioned dataset.  In the below we use the partitioned dataset created above.
+
+```{r open-small-dataset}
+iris_data <- arrow::open_csv_dataset(sources = working_dir)
+iris_data
+```
+
+The open_dataset function from arrow creates an arrow dataset object, and will 
+infer an arrow datatype for each column based on the data present.  Later I will 
+give a method to avoid this type casting if required.
+
+The dplyr backend ensures you can construct queries and summaries using the tidyverse tooling.  In my experience, the most commonly used verbs are supported.  Some convenience functions, such as `summarise_all`, were missing at the last time I checked.
+
+The familiar basic workflow is to construct your query using pipes.  Importantly, this does not execute the query, but simply creates the query object.  The query is only executed when `collect` is called.  See below:
+
+```{r query-small-dataset}
+query <- iris_data |> 
+  dplyr::mutate(arrow_data_set=1) |> 
+  dplyr::count(arrow_data_set, data_version)
+
+query
+```
+
+```{r collect-query}
+query |> dplyr::collect() |> dplyr::arrange(arrow_data_set, data_version)
+```
+
+This is powerful for a number of reasons:
+
+- as in the example above, if the dataset to be analysed is partitioned and stored in multiple (consistently structured) files in a single directory, all the files can be handled in one query
+- it is highly optimized and avoids much of the overhead involved with storing the data in memory: it is incredibly fast (really - I am still amazed at how fast some analyses can run with the arrow tooling).  The data structures are well-optimized and you will almost certainly get improvements over using dplyr directly on tibbles or data.frames.
+- it is memory efficient, allowing users to work with files much larger than might otherwise be possible on a relatively small machine.
+
+Joining datasets can be handled in the usual way, all the usual `dplyr::<inner/outer/left/right>_join` functions can be used in the queries treating multiple arrow datasets in the same way as data frames or tibbles.  These are still evaluated only at the point of collecting the results.
+
+## Tips
+### Select early
+
+Tooling such as the arrow package and polars get huge performance boosts by optimizing queries and reading only the data required.  If you can structure your queries to provide the compiler with information this can provide huge speed improvements.  A good practice is to select only the columns you need, as early as possible - this ensures that only the relevant fields are read from the file, and can lead to significant performance gains.
+
+### Avoid Data Type Surprises
+
+This tip can be summed up as **data types matter** - unless the raw data is validated well, automated type-casting to specific types can cause data-loss and/or invalidate downstream processing steps.  Whether you think data types matter when you're running analyses or not probably depends most on what stage of the workflow you're at and the level of confidence you have in the data.  For untrusted data it is sometimes worthwhile exploring and validating the data as strings, and once validated, casting to a more appropriate or memory efficient data type, and store in a compressed, typed, data storage (such as parquet[^2]) ready for downstream analysis.
+
+[^2]: For the base R users, and those who care less about cross-platform integrations, I still occasionally use RDS and in the past have used feather, particularly if storing a list of objects, but for dataframes I've found it is very difficult to beat parquet, particularly in teams using multiple languages/frameworks.
+
+So, **datatypes matter**.
+Attentive readers will have noticed that each of the columns above have a datatype assigned to them and these are not basic R datatypes.  This is because the computation is being carried out using Arrow's well-optimized datatypes and storage (see the arrow documentation and cookbook for further discussion on arrow types).
+
+Since parquet files are so widely used these days for large data, and in this case the data is stored with a type, it is perfectly possible that the datatypes are correct and this is convenient. However, for csv files [^3], they are inferred by partially reading the file and this can cause some errors to be thrown when running queries (this is somewhat orthogonal to data-loss mentioned above).  Fair warning, although most of the time the errors thrown by the arrow package are descriptive, I have occasionally found an error that was completely unclear but was fixed in exactly the same way: fixing the schema at read time, and in the worst case, reading all the data as string.
+
+[^3]: Yes - I know: Yes, for small enough csv files there should be no need to process them like this and if there are enough rows to justify this approach then arguably the data has no business being stored in a csv file.  However, in my experience I've had to sort this issue for myself and for numerous other people when supporting legacy systems or client requirements.
+
+To demonstrate this an example where the type inference fails, we regenerate the above dataset wiht a column that includes a large number of missing values before some integers, and perform a count operation.
+
+```{r}
+
+for (ind in seq(1,100)){
+  fname <- glue::glue("iris-{ind}.csv")
+  
+  iris |> 
+    dplyr::mutate(
+      data_version = ind,
+      badly_typed_column = `if`(ind > 99, 1L, NA)
+      ) |> 
+    readr::write_csv(fs::path(working_dir, fname))
+}
+
+iris_data <- arrow::open_csv_dataset(sources = working_dir)
+iris_data
+```
+
+As we see from the above output the badly_typed_column has a datatype of `null`. This can occur in situations as above, in the first 99 files the badly_typed_column contains only NA's, while for the 100th file, it contains 1's.
+
+```{r}
+query <- iris_data |> dplyr::count(badly_typed_column, data_version)
+
+query
+```
+```{r}
+# wrapped in try-catch to enable quarto to render document.
+tryCatch(
+  {query |> dplyr::collect()},
+  error=\(e) {message('An Error Occurred'); print(e)}
+)
+
+```
+
+As we can see, the error is pretty clear here, the inferred type was not consistent with the data in file 100.  This caused a failure.  The solution is clear - you must specify a schema for the data, by creating a schema object at dataset creation time.  In this case, the below would suffice:
+
+```{r, echo=F}
+rm(list = c("iris_data"))
+```
+
+```{r}
+
+library(arrow, warn.conflicts = F)
+
+typed_iris_data <- open_csv_dataset(
+  sources = working_dir, 
+  schema = schema(
+    field("Sepal.Length", double()),
+    field("Sepal.Width", float64()),
+    field("Petal.Length", float64()),
+    field("Petal.Width", float64()),
+    field("Species", string()),
+    field("data_version", int64()),
+    field("badly_typed_column", int32())
+  ),
+  skip=1 # this is required to avoid reading the headers if a schema is provided and reading multiple files.
+)
+```
+
+Running the query will now succeed:
+
+```{r}
+typed_iris_data |> 
+  dplyr::count(badly_typed_column, is.na(data_version)) |> 
+  dplyr::collect()
+```
+
+```{r, echo=FALSE}
+rm(list = c("typed_iris_data"))
+```
+
+
+## Read all columns as strings
+
+As I've found frequently the case (perhaps surprisingly often, though this may depend on the field one works in) if you're quickly exploring data, it is sometimes convenient to read the data as strings.  The below function is a convenient override for doing exactly this.
+
+```{r}
+
+open_dataset_all_str <- function(sources){
+  # 1. get column names from dataset
+  typed_dataset <- arrow::open_csv_dataset(sources = sources)  
+  columns <- names(typed_dataset)
+  # 2. create custom schema
+  schema <- arrow::schema(lapply(columns, \(x){arrow::field(x,arrow::string())}))
+  # 3. read dataset with custom schema
+  dataset <- arrow::open_csv_dataset(sources = sources, schema=schema, skip=1)
+  # Note skip=1 here, to avoid reading in the header lines from multiple files as entries in the columns.
+  return(dataset)
+}
+
+```
+
+
+```{r}
+typed_dt <- open_csv_dataset(sources=working_dir)
+typed_dt
+```
+```{r}
+str_dt <- open_dataset_all_str(sources=working_dir)
+str_dt
+```
+
+```{r}
+unlink(working_dir,recursive=T)
+```
+
