@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/008-recursive-chmod/008-how-to-recursively-chmod.html",
       "/posts/007-reading-large-datasets-with-arrow/007-basic-intro-reading-large-datasets.html",
       "/posts/006-genetics-resources/genetics-resources.html",
       "/posts/005-docker-container-for-bioinformatics/docker-containers-for-bioinformatics.html",
