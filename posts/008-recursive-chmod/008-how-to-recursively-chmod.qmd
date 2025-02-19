@@ -1,0 +1,23 @@
+---
+title:  "How To Recursively chmod"
+author: "CG"
+date: "2025-02-14"
+date-modified: "2025-02-14"
+categories: [bash]
+---
+
+When working on a unix based system, the most common way to manage permissions is with the `chmod` command.  While there is a `-R` recursive flag, this does not distinguish between files and directories.  Since the solution to this has proven useful to several people recently, I thought I'd share it here.
+
+The best way I've found to get around this is to use `find` and the `-exec` option to execute a command.  For example, to recursively chmod all files in subdirectories of a directory named `DATA/` to be read-only for all users (444) the following command will suffice.
+
+```bash
+find DATA/ -type f -exec chmod 444 "{}" \;
+```
+
+Similarly, if you'd like to chmod 555 all subdirectories:
+```bash
+find DATA/ -type d -exec chmod 555 "{}" \;
+```
+
+To break down these commands, the `find DATA/ -type d` command will recursively list all subdirectories of `DATA/`.  The `-exec ` part defines a command to run for all found directories.  The parentheses are replaced by the directories found in the find command and escaping the semicolon ensures the command is parsed correctly.
+
